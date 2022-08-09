@@ -142,11 +142,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\SpaceShip.cpp" />
+    <ClCompile Include="src\GameObject.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\vertexOperations.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\GameObject.h" />
     <ClInclude Include="include\Game.h" />
+    <ClInclude Include="include\SpaceShip.h" />
+    <ClInclude Include="include\vertexOperations.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
