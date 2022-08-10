@@ -1,5 +1,11 @@
 #include "../include/GameObject.h"
 
+GameObject::GameObject()
+{
+	position = sf::Vector2f(0, 0);
+	rotation = 0;
+}
+
 void GameObject::setPosition(sf::Vector2f newPosition)
 {
 	for (int i = 0; i < vertexArr.getVertexCount(); i++)

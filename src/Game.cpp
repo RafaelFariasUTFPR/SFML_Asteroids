@@ -2,7 +2,7 @@
 
 
 // Quando o objeto Game for instanciado também criará um objeto window
-Game::Game() : window(sf::VideoMode(800, 800), "Asteroids"), randomGenerator(randomSeed())
+Game::Game() : window(sf::VideoMode(800, 800), "Asteroids")
 {
 
 
@@ -26,7 +26,7 @@ void Game::beginPlay()
     player1.setScreenSizeY(screenSizeY);
 
 
-    for (int i = 0; i < 100; i++)
+    for (int i = 0; i < 10000; i++)
     {
         spawnAsteroid();
     }
@@ -35,17 +35,12 @@ void Game::beginPlay()
 
 void Game::spawnAsteroid()
 {
-    //Range do gerador (0 - screenSizeY)
-    std::uniform_int_distribution<> distr(0, screenSizeY);
 
+    int ySpawnPos = random::randomIntInRange(0, screenSizeY);
 
-    int ySpawnPos = distr(randomGenerator);
-    
-    
     //0 == esquerda      || 1 == direita
-    distr = std::uniform_int_distribution<>(0, 1);
-    int spawnSide = distr(randomGenerator);
-    
+    int spawnSide = random::randomIntInRange(0, 1);
+
     int xSpawnPos = 0;
     
     if (spawnSide == 1)
@@ -118,6 +113,8 @@ void Game::draw()
 
     for(int i = 0; i < asteroidArr.size(); i++)
         window.draw(asteroidArr[i].gameObject.vertexArr);
+
+
     window.draw(fpsText);
 
     window.display();

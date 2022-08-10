@@ -17,7 +17,10 @@ public:
 
 
 private:
-	void generateGeometry(float asteroidSize);
+	void generateGeometry();
+	float offSet();
+
+	float radius;
 
 };
 

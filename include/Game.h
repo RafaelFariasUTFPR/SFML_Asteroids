@@ -6,10 +6,10 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <random>
 
 #include "SpaceShip.h"
 #include "AsteroidMaster.h"
+#include "RandomGenerator.h"
 
 
 class Game
@@ -43,9 +43,6 @@ private:
 	sf::Clock globalClock;
 	sf::Clock deltaTimeClock;
 
-
-	std::random_device randomSeed; // obtain a random number from hardware
-	std::mt19937 randomGenerator; // seed the generator
 
 	double deltaTime;
 	float fps;
