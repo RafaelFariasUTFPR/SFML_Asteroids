@@ -41,13 +41,14 @@ private:
 
 
 
-	float deltaTime;
+	double deltaTime;
 	float fps;
 	SpaceShip player1;
 	sf::Font arialFont;
 	sf::Text fpsText;
 	
-
+	int screenSizeX = 800;
+	int screenSizeY = 800;
 
 };
 

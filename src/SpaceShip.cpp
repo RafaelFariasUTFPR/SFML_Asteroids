@@ -23,7 +23,19 @@ void SpaceShip::process()
 {
     gameObject.setRotation(gameObject.rotation + (rotationSpeed * deltaTime));
     
-    float s = rotationSpeed * deltaTime;
+    gameObject.setPosition(gameObject.position + sf::Vector2f((speed.x * deltaTime),(speed.y * deltaTime)));
+
+
+    //Wrapping the screen
+    if (gameObject.position.x > screenSizeX)
+        gameObject.setPosition(sf::Vector2f(0, gameObject.position.y));
+    if (gameObject.position.x < 0)
+        gameObject.setPosition(sf::Vector2f(screenSizeX, gameObject.position.y));
+
+    if (gameObject.position.y > screenSizeY)
+        gameObject.setPosition(sf::Vector2f(gameObject.position.x, 0));
+    if (gameObject.position.y < 0)
+        gameObject.setPosition(sf::Vector2f(gameObject.position.x, screenSizeY));
 
 }
 
@@ -31,7 +43,7 @@ void SpaceShip::process()
 
 void SpaceShip::inputLeft()
 {
-    float newRotationsSpeed = rotationSpeed - (rotationAcceleration * deltaTime);
+    double newRotationsSpeed = rotationSpeed - (rotationAcceleration * deltaTime);
     
     if (newRotationsSpeed < -maxRotationSpeed)
         newRotationsSpeed = -maxRotationSpeed;
@@ -40,10 +52,31 @@ void SpaceShip::inputLeft()
 }
 void SpaceShip::inputRight()
 {
-    float newRotationsSpeed = rotationSpeed + (rotationAcceleration * deltaTime);
+    double newRotationsSpeed = rotationSpeed + (rotationAcceleration * deltaTime);
 
     if (newRotationsSpeed > maxRotationSpeed)
         newRotationsSpeed = maxRotationSpeed;
 
     setRotationSpeed(newRotationsSpeed);
+}
+
+void SpaceShip::inputForward()
+{
+    double sinMultiplier = sin(gameObject.rotationRadians); // Eixo X
+    double cosMultiplier = -cos(gameObject.rotationRadians); // Eixo y
+
+    sf::Vector2f tempSpeedVector((acceleration * sinMultiplier * deltaTime), (acceleration * cosMultiplier * deltaTime));
+    sf::Vector2f newSpeed = (speed + tempSpeedVector);
+
+    float mod = sqrt(pow(newSpeed.x, 2) + pow(newSpeed.y, 2));
+
+    if(mod <= maxSpeed)
+        setSpeed(newSpeed);
+    std::cout << mod << std::endl;
+    
+}
+
+void SpaceShip::inputFire()
+{
+
 }

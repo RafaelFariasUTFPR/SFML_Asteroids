@@ -24,3 +24,7 @@ sf::Vector2f rotatePointArrounPoint(sf::Vector2f myPoint, sf::Vector2f centerPoi
 	return myPoint;
 }
 
+float deg2rad(float angle)
+{
+	return angle * (PI / 180);
+}

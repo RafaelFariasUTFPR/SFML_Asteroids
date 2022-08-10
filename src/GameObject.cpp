@@ -12,7 +12,7 @@ void GameObject::setPosition(sf::Vector2f newPosition)
 	
 }
 
-void GameObject::setRotation(float newRotation)
+void GameObject::setRotation(double newRotation)
 {
 	//Mantendo rotação menor que 360°
 	if (newRotation > 360)
@@ -30,4 +30,5 @@ void GameObject::setRotation(float newRotation)
 
 	}
 	rotation = newRotation;
+	rotationRadians = deg2rad(rotation);
 }

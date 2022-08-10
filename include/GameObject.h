@@ -14,7 +14,7 @@ public:
 	}
 
 	void setPosition(sf::Vector2f newPosition);
-	void setRotation(float newRotation);
+	void setRotation(double newRotation);
 
 
 	sf::VertexArray vertexArr;
@@ -22,6 +22,7 @@ public:
 	
 	sf::Vector2f position;
 	float rotation;
+	float rotationRadians = 0;
 
 
 protected:

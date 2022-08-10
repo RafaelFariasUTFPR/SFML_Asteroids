@@ -10,13 +10,18 @@ Game::Game() : window(sf::VideoMode(800, 800), "Asteroids")
     fpsText.setFont(arialFont);
     fpsText.setFillColor(sf::Color::White);
     fpsText.setCharacterSize(12);
+
+    
 }
 
 void Game::beginPlay()
 {
-    //window.setFramerateLimit(120);
-	
+    window.setFramerateLimit(500);
+    
+    //Player setup
     player1.gameObject.setPosition(sf::Vector2f(400, 400));
+    player1.setScreenSizeX(screenSizeX);
+    player1.setScreenSizeY(screenSizeY);
 
 
 }
@@ -58,6 +63,8 @@ void Game::preProcess()
 void Game::process()
 {
     player1.process();
+    
+
 
 
     
@@ -67,9 +74,9 @@ void Game::process()
 float Game::calculateDeltaTime()
 {
 	sf::Time time = deltaTimeClock.getElapsedTime();
-	deltaTimeClock.restart().asMilliseconds();
+	deltaTimeClock.restart().asSeconds();
 
-	return time.asMilliseconds();
+	return time.asSeconds();
 }
 
 void Game::draw()
@@ -88,6 +95,20 @@ void Game::input()
         player1.inputLeft();
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
         player1.inputRight();
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+        player1.inputForward();
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+        player1.inputFire();
+
+
+    //Debug keys
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::F1))
+        window.setFramerateLimit(30);
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::F2))
+        window.setFramerateLimit(400);
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::F3))
+        window.setFramerateLimit(900);
+
 }
 
 
