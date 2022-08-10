@@ -14,6 +14,9 @@ void GameObject::setPosition(sf::Vector2f newPosition)
 
 void GameObject::setRotation(float newRotation)
 {
+	//Mantendo rotação menor que 360°
+	if (newRotation > 360)
+		newRotation = remainder(newRotation, 360);
 
 	sf::VertexArray tempVertexArr;
 	for (int i = 0; i < vertexArr.getVertexCount(); i++)
