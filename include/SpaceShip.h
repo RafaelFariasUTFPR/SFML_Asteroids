@@ -51,7 +51,7 @@ private:
 
 
     //Settings
-    float maxSpeed = 300;
+    float maxSpeed = 400;
     float acceleration = 100;
     float maxRotationSpeed = 300;
     float rotationAcceleration = 300;

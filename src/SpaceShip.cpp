@@ -3,14 +3,16 @@
 
 SpaceShip::SpaceShip()
 {
+    //Definindo o tipo de linha
+    objectVertexArr.setPrimitiveType(sf::LinesStrip);
+
     //Gerando o formato da nave
     objectVertexArr.append(sf::Vertex(sf::Vector2f(-5, 5), sf::Color::White));
     objectVertexArr.append(sf::Vertex(sf::Vector2f(0, -10), sf::Color::White));
     objectVertexArr.append(sf::Vertex(sf::Vector2f(5, 5), sf::Color::White));
     objectVertexArr.append(sf::Vertex(sf::Vector2f(-5, 5), sf::Color::White));
 
-    //Definindo o tipo de linha
-    objectVertexArr.setPrimitiveType(sf::LinesStrip);
+
 
     //Setando os vertices do gameObject
     gameObject.vertexArr = objectVertexArr;
@@ -68,12 +70,24 @@ void SpaceShip::inputForward()
     sf::Vector2f tempSpeedVector((acceleration * sinMultiplier * deltaTime), (acceleration * cosMultiplier * deltaTime));
     sf::Vector2f newSpeed = (speed + tempSpeedVector);
 
+
+    /*
     float mod = sqrt(pow(newSpeed.x, 2) + pow(newSpeed.y, 2));
 
     if(mod <= maxSpeed)
         setSpeed(newSpeed);
+
     std::cout << mod << std::endl;
+
+    */
+
+    if (newSpeed.x > maxSpeed)
+        newSpeed.x = maxSpeed;
     
+    if (newSpeed.y > maxSpeed)
+        newSpeed.y = maxSpeed;
+    
+    setSpeed(newSpeed);
 }
 
 void SpaceShip::inputFire()

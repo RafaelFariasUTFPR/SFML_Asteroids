@@ -2,8 +2,10 @@
 
 
 // Quando o objeto Game for instanciado também criará um objeto window
-Game::Game() : window(sf::VideoMode(800, 800), "Asteroids")
+Game::Game() : window(sf::VideoMode(800, 800), "Asteroids"), randomGenerator(randomSeed())
 {
+
+
 
     //Setando o fps
     arialFont.loadFromFile("resources/arial.ttf");
@@ -23,6 +25,35 @@ void Game::beginPlay()
     player1.setScreenSizeX(screenSizeX);
     player1.setScreenSizeY(screenSizeY);
 
+
+    for (int i = 0; i < 100; i++)
+    {
+        spawnAsteroid();
+    }
+
+}
+
+void Game::spawnAsteroid()
+{
+    //Range do gerador (0 - screenSizeY)
+    std::uniform_int_distribution<> distr(0, screenSizeY);
+
+
+    int ySpawnPos = distr(randomGenerator);
+    
+    
+    //0 == esquerda      || 1 == direita
+    distr = std::uniform_int_distribution<>(0, 1);
+    int spawnSide = distr(randomGenerator);
+    
+    int xSpawnPos = 0;
+    
+    if (spawnSide == 1)
+        xSpawnPos = screenSizeX;
+
+
+    AsteroidMaster tempAst(xSpawnPos, ySpawnPos);
+    asteroidArr.push_back(tempAst);
 
 }
 
@@ -84,6 +115,9 @@ void Game::draw()
     window.clear();
 
     window.draw(player1.gameObject.vertexArr);
+
+    for(int i = 0; i < asteroidArr.size(); i++)
+        window.draw(asteroidArr[i].gameObject.vertexArr);
     window.draw(fpsText);
 
     window.display();

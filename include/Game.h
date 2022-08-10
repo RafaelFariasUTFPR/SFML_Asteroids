@@ -5,8 +5,12 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
+#include <random>
 
 #include "SpaceShip.h"
+#include "AsteroidMaster.h"
+
 
 class Game
 {
@@ -34,12 +38,14 @@ private:
 	
 	float calculateDeltaTime();
 
+	void spawnAsteroid();
 
 	sf::Clock globalClock;
 	sf::Clock deltaTimeClock;
 
 
-
+	std::random_device randomSeed; // obtain a random number from hardware
+	std::mt19937 randomGenerator; // seed the generator
 
 	double deltaTime;
 	float fps;
@@ -50,6 +56,8 @@ private:
 	int screenSizeX = 800;
 	int screenSizeY = 800;
 
+	
+	std::vector <AsteroidMaster> asteroidArr;
 };
 
 
