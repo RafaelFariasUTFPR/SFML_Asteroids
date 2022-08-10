@@ -4,7 +4,7 @@
 #include <SFML/System.hpp>
 
 #include <iostream>
-#include <thread>
+#include <string>
 
 #include "SpaceShip.h"
 
@@ -18,29 +18,37 @@ public:
 	void loop();
 
 
+	sf::RenderWindow window;
+
+
+	
+
+private:
+	//Game loop functions
+	void preProcess();
+	void input();
+	void process();
+	void draw();
+	
+	void endPlay();
+	
+	float calculateDeltaTime();
+
 
 	sf::Clock globalClock;
 	sf::Clock deltaTimeClock;
-	
 
-	sf::RenderWindow window;
-	bool running = false;
 
-	void physicsProcess();
 
-protected:
-	void preProcess();
-	void process();
-	float calculateDeltaTime();
-	void draw();
 
-	
-	
 	float deltaTime;
 	float fps;
-	SpaceShip spaceShip;
+	SpaceShip player1;
+	sf::Font arialFont;
+	sf::Text fpsText;
 	
 
 
 };
+
 

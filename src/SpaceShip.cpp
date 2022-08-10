@@ -18,3 +18,32 @@ SpaceShip::SpaceShip()
     
 
 }
+
+void SpaceShip::process()
+{
+    gameObject.setRotation(gameObject.rotation + (rotationSpeed * deltaTime));
+    
+    float s = rotationSpeed * deltaTime;
+
+}
+
+
+
+void SpaceShip::inputLeft()
+{
+    float newRotationsSpeed = rotationSpeed - (rotationAcceleration * deltaTime);
+    
+    if (newRotationsSpeed < -maxRotationSpeed)
+        newRotationsSpeed = -maxRotationSpeed;
+
+    setRotationSpeed(newRotationsSpeed);
+}
+void SpaceShip::inputRight()
+{
+    float newRotationsSpeed = rotationSpeed + (rotationAcceleration * deltaTime);
+
+    if (newRotationsSpeed > maxRotationSpeed)
+        newRotationsSpeed = maxRotationSpeed;
+
+    setRotationSpeed(newRotationsSpeed);
+}

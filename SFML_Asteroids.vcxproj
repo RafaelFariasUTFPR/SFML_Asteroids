@@ -154,6 +154,9 @@
     <ClInclude Include="include\SpaceShip.h" />
     <ClInclude Include="include\vertexOperations.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Font Include="C:\Users\rafae\Downloads\arial.ttf" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

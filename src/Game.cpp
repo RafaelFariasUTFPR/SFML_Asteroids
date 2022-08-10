@@ -5,27 +5,26 @@
 Game::Game() : window(sf::VideoMode(800, 800), "Asteroids")
 {
 
+    //Setando o fps
+    arialFont.loadFromFile("resources/arial.ttf");
+    fpsText.setFont(arialFont);
+    fpsText.setFillColor(sf::Color::White);
+    fpsText.setCharacterSize(12);
 }
 
 void Game::beginPlay()
 {
-    running = true;
-	spaceShip.gameObject.setPosition(sf::Vector2f(400, 400));
+    //window.setFramerateLimit(120);
+	
+    player1.gameObject.setPosition(sf::Vector2f(400, 400));
 
-
-
-
-    window.setFramerateLimit(120);
-
-
-
-    
 
 }
 
 void Game::loop()
 {
     preProcess();
+    input();
     process();
     draw();
 }
@@ -39,6 +38,7 @@ void Game::preProcess()
         {
         case sf::Event::Closed:
             window.close();
+            endPlay();
             break;
 
         }
@@ -46,8 +46,10 @@ void Game::preProcess()
     }
     //Calculando o FPS
     fps = 1 / deltaTimeClock.getElapsedTime().asSeconds();
-    std::cout << fps << std::endl;
+    int intFps = (int)fps;
+    fpsText.setString("FPS: " + std::to_string(intFps));
     deltaTime = calculateDeltaTime();
+    player1.setDeltaTime(deltaTime);
 
 
 
@@ -55,9 +57,7 @@ void Game::preProcess()
 
 void Game::process()
 {
-    spaceShip.gameObject.setRotation(spaceShip.gameObject.rotation + (0.1 * deltaTime));
-
-
+    player1.process();
 
 
     
@@ -76,16 +76,25 @@ void Game::draw()
 {
     window.clear();
 
-    window.draw(spaceShip.gameObject.vertexArr);
-
+    window.draw(player1.gameObject.vertexArr);
+    window.draw(fpsText);
 
     window.display();
 }
 
-void Game::physicsProcess()
+void Game::input()
 {
-    while (running)
-    {
-        std::cout << "Running" << std::endl;
-    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+        player1.inputLeft();
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+        player1.inputRight();
+}
+
+
+
+
+//Codigo executado ao fim do jogo
+void Game::endPlay()
+{
+
 }
