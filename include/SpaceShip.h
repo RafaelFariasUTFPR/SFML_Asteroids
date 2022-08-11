@@ -20,33 +20,27 @@ public:
     void inputForward();
     void inputFire();
 
-    void process();
+    void process(double _deltaTime);
 
 
     //Getters & Setters
-    sf::Vector2f getSpeed() { return speed; }
-    double getRotationSpeed() { return rotationSpeed; }
+
     float getMaxSpeed() { return maxSpeed; }
     float getMaxRotationSpeed() { return maxRotationSpeed; }
     float getRotationAcceleration() { return rotationAcceleration; }
     float getAcceleration() { return acceleration; }
 
-    void setSpeed(sf::Vector2f newSpeed) { speed = newSpeed; }
-    void setRotationSpeed(double newRotationSpeed) { rotationSpeed = newRotationSpeed; }
+    
     void setMaxSpeed(float newMaxSpeed) { maxSpeed = newMaxSpeed; }
     void setMaxRotationSpeed(float newMaxRotationSpeed) { maxRotationSpeed = newMaxRotationSpeed; }
     void setRotationAcceleration(float newRotationAcceleration) { rotationAcceleration = newRotationAcceleration; }
     void setAcceleration(float newAcceleration) { acceleration = newAcceleration; }
-    void setDeltaTime(double newDeltaTime) { deltaTime = newDeltaTime; }
-    void setScreenSizeX(int newSize) { screenSizeX = newSize; }
-    void setScreenSizeY(int newSize) { screenSizeY = newSize; }
+    void setDeltaTime(double newDeltaTime);
+    void setScreenSizeX(int newSize);
+    void setScreenSizeY(int newSize);
 
 
 private:
-    sf::Vector2f speed;
-    double rotationSpeed;
-    
-    
     double deltaTime;
 
 
