@@ -26,7 +26,7 @@ void Game::beginPlay()
     player1.setScreenSizeY(screenSizeY);
 
 
-    for (int i = 0; i < 10000; i++)
+    //for (int i = 0; i < 1000; i++)
     {
         spawnAsteroid();
     }
@@ -48,6 +48,9 @@ void Game::spawnAsteroid()
 
 
     AsteroidMaster tempAst(xSpawnPos, ySpawnPos);
+    tempAst.setScreenSizeX(screenSizeX);
+    tempAst.setScreenSizeY(screenSizeY);
+
     asteroidArr.push_back(tempAst);
 
 }
@@ -80,7 +83,6 @@ void Game::preProcess()
     int intFps = (int)fps;
     fpsText.setString("FPS: " + std::to_string(intFps));
     deltaTime = calculateDeltaTime();
-    player1.setDeltaTime(deltaTime);
 
 
 
@@ -88,9 +90,11 @@ void Game::preProcess()
 
 void Game::process()
 {
-    player1.process();
+    player1.process(deltaTime);
     
 
+    for (int i = 0; i < asteroidArr.size(); i++)
+        asteroidArr[i].process(deltaTime);
 
 
     

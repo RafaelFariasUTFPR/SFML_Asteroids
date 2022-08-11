@@ -3,7 +3,7 @@
 AsteroidMaster::AsteroidMaster()
 {
     radius = 30;
-    generateGeometry();
+    setup();
 }
 
 
@@ -11,21 +11,25 @@ AsteroidMaster::AsteroidMaster(int xSpawnPos, int ySpawnPos)
 {
 
     radius = 50;
-    generateGeometry();
+    setup();
 
     gameObject.setPosition(sf::Vector2f(xSpawnPos, ySpawnPos));
-
-    //For debugging
-    gameObject.setPosition(sf::Vector2f(200, 200));
+    
 }
 
 
 AsteroidMaster::AsteroidMaster(int xSpawnPos, int ySpawnPos, float size)
 {
     radius = size;
-    generateGeometry();
+    setup();
 }
 
+
+void AsteroidMaster::process(double _deltaTime)
+{
+    gameObject.setDeltaTime(_deltaTime);
+    gameObject.process();
+}
 
 
 void AsteroidMaster::generateGeometry()
@@ -109,6 +113,14 @@ void AsteroidMaster::generateGeometry()
     gameObject.setRotation(random::randomIntInRange(0, 360));
 
     
+}
+
+void AsteroidMaster::setup()
+{
+    generateGeometry();
+    gameObject.screenWrap = true;
+    gameObject.setWrapOffset(1.2 * radius, 1.2 * radius);
+    gameObject.setSpeed(sf::Vector2f(100, 30));
 }
 
 float AsteroidMaster::offSet()

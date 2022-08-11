@@ -16,28 +16,18 @@ SpaceShip::SpaceShip()
 
     //Setando os vertices do gameObject
     gameObject.vertexArr = objectVertexArr;
-
+    
+    gameObject.screenWrap = true;
+    gameObject.setWrapOffset(5, 5);
     
 
 }
 
-void SpaceShip::process()
+void SpaceShip::process(double _deltaTime)
 {
-    gameObject.setRotation(gameObject.rotation + (rotationSpeed * deltaTime));
-    
-    gameObject.setPosition(gameObject.position + sf::Vector2f((speed.x * deltaTime),(speed.y * deltaTime)));
+    setDeltaTime(_deltaTime);
+    gameObject.process();
 
-
-    //Wrapping the screen
-    if (gameObject.position.x > screenSizeX)
-        gameObject.setPosition(sf::Vector2f(0, gameObject.position.y));
-    if (gameObject.position.x < 0)
-        gameObject.setPosition(sf::Vector2f(screenSizeX, gameObject.position.y));
-
-    if (gameObject.position.y > screenSizeY)
-        gameObject.setPosition(sf::Vector2f(gameObject.position.x, 0));
-    if (gameObject.position.y < 0)
-        gameObject.setPosition(sf::Vector2f(gameObject.position.x, screenSizeY));
 
 }
 
@@ -45,21 +35,20 @@ void SpaceShip::process()
 
 void SpaceShip::inputLeft()
 {
-    double newRotationsSpeed = rotationSpeed - (rotationAcceleration * deltaTime);
+    double newRotationsSpeed = gameObject.getRotationSpeed() - (rotationAcceleration * deltaTime);
     
     if (newRotationsSpeed < -maxRotationSpeed)
         newRotationsSpeed = -maxRotationSpeed;
 
-    setRotationSpeed(newRotationsSpeed);
+    gameObject.setRotationSpeed(newRotationsSpeed);
 }
 void SpaceShip::inputRight()
 {
-    double newRotationsSpeed = rotationSpeed + (rotationAcceleration * deltaTime);
+    double newRotationsSpeed = gameObject.getRotationSpeed() + (rotationAcceleration * deltaTime);
 
     if (newRotationsSpeed > maxRotationSpeed)
         newRotationsSpeed = maxRotationSpeed;
-
-    setRotationSpeed(newRotationsSpeed);
+    gameObject.setRotationSpeed(newRotationsSpeed);
 }
 
 void SpaceShip::inputForward()
@@ -68,7 +57,7 @@ void SpaceShip::inputForward()
     double cosMultiplier = -cos(gameObject.rotationRadians); // Eixo y
 
     sf::Vector2f tempSpeedVector((acceleration * sinMultiplier * deltaTime), (acceleration * cosMultiplier * deltaTime));
-    sf::Vector2f newSpeed = (speed + tempSpeedVector);
+    sf::Vector2f newSpeed = (gameObject.getSpeed() + tempSpeedVector);
 
 
     /*
@@ -87,10 +76,28 @@ void SpaceShip::inputForward()
     if (newSpeed.y > maxSpeed)
         newSpeed.y = maxSpeed;
     
-    setSpeed(newSpeed);
+    gameObject.setSpeed(newSpeed);
 }
 
 void SpaceShip::inputFire()
 {
 
+}
+
+void SpaceShip::setDeltaTime(double newDeltaTime)
+{
+    deltaTime = newDeltaTime;
+    gameObject.setDeltaTime(newDeltaTime);
+}
+
+void SpaceShip::setScreenSizeX(int newSize)
+{
+    screenSizeX = newSize;
+    gameObject.setScreenSizeX(newSize);
+}
+
+void SpaceShip::setScreenSizeY(int newSize)
+{
+    screenSizeY = newSize;
+    gameObject.setScreenSizeY(newSize);
 }

@@ -4,7 +4,35 @@ GameObject::GameObject()
 {
 	position = sf::Vector2f(0, 0);
 	rotation = 0;
+	speed = sf::Vector2f(0, 0);
+	rotationSpeed = 0;
 }
+
+void GameObject::process()
+{
+	setRotation(rotation + (getRotationSpeed() * deltaTime));
+
+	setPosition(position + sf::Vector2f((getSpeed().x * deltaTime), (getSpeed().y * deltaTime)));
+	
+	
+	if (screenWrap)
+		processWraping();
+}
+
+void GameObject::processWraping()
+{
+	if (position.x - wrapOffsetX > screenSizeX)
+		setPosition(sf::Vector2f(- wrapOffsetX, position.y));
+	if (position.x + wrapOffsetX < 0)
+		setPosition(sf::Vector2f(screenSizeX + wrapOffsetX, position.y));
+
+	if (position.y - wrapOffsetY > screenSizeY)
+		setPosition(sf::Vector2f(position.x, -wrapOffsetY));
+	if (position.y + wrapOffsetY < 0)
+		setPosition(sf::Vector2f(position.x, screenSizeY + wrapOffsetY));
+
+}
+
 
 void GameObject::setPosition(sf::Vector2f newPosition)
 {
