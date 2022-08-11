@@ -50,7 +50,6 @@ void SpaceShip::inputRight()
         newRotationsSpeed = maxRotationSpeed;
     gameObject.setRotationSpeed(newRotationsSpeed);
 }
-
 void SpaceShip::inputForward()
 {
     double sinMultiplier = sin(gameObject.rotationRadians); // Eixo X

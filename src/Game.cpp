@@ -4,9 +4,10 @@
 // Quando o objeto Game for instanciado também criará um objeto window
 Game::Game() : window(sf::VideoMode(800, 800), "Asteroids")
 {
+    
 
-
-
+    deltaTime = 0;
+    fps = 0;
     //Setando o fps
     arialFont.loadFromFile("resources/arial.ttf");
     fpsText.setFont(arialFont);
@@ -26,7 +27,7 @@ void Game::beginPlay()
     player1.setScreenSizeY(screenSizeY);
 
 
-    //for (int i = 0; i < 1000; i++)
+    for (int i = 0; i < 10; i++)
     {
         spawnAsteroid();
     }
@@ -41,13 +42,9 @@ void Game::spawnAsteroid()
     //0 == esquerda      || 1 == direita
     int spawnSide = random::randomIntInRange(0, 1);
 
-    int xSpawnPos = 0;
-    
-    if (spawnSide == 1)
-        xSpawnPos = screenSizeX;
 
 
-    AsteroidMaster tempAst(xSpawnPos, ySpawnPos);
+    AsteroidMaster tempAst(ySpawnPos, spawnSide);
     tempAst.setScreenSizeX(screenSizeX);
     tempAst.setScreenSizeY(screenSizeY);
 

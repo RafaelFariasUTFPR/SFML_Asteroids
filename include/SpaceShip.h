@@ -46,9 +46,9 @@ private:
 
     //Settings
     float maxSpeed = 400;
-    float acceleration = 100;
+    float acceleration = 180;
     float maxRotationSpeed = 300;
-    float rotationAcceleration = 300;
+    float rotationAcceleration = 400;
 
     int screenSizeX;
     int screenSizeY;

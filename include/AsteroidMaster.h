@@ -6,7 +6,7 @@ class AsteroidMaster
 {
 public:
 	AsteroidMaster();
-	AsteroidMaster(int xSpawnPos, int ySpawnPos);
+	AsteroidMaster(int ySpawnPos, int spawnSide);
 	AsteroidMaster(int xSpawnPos, int ySpawnPos, float size);
 
 	void process(double _deltaTime);
@@ -27,8 +27,12 @@ private:
 	float offSet();
 
 	float radius;
+	float speed;
+
 	int screenSizeX;
 	int screenSizeY;
 
+	//-1 == <-     1 == ->   
+	int floatDirection = 1;
 };
 
