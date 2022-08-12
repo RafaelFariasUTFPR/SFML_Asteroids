@@ -23,11 +23,16 @@ SpaceShip::SpaceShip()
 
 }
 
-void SpaceShip::process(double _deltaTime)
+void SpaceShip::process()
 {
-    setDeltaTime(_deltaTime);
     gameObject.process();
 
+
+    for (int i = 0; i < bulletsArr.size(); i++)
+    {
+        //std::cout << i << "\n";
+        bulletsArr.at(i).process();
+    }
 
 }
 
@@ -35,7 +40,7 @@ void SpaceShip::process(double _deltaTime)
 
 void SpaceShip::inputLeft()
 {
-    double newRotationsSpeed = gameObject.getRotationSpeed() - (rotationAcceleration * deltaTime);
+    double newRotationsSpeed = gameObject.getRotationSpeed() - (rotationAcceleration * global::deltaTime);
     
     if (newRotationsSpeed < -maxRotationSpeed)
         newRotationsSpeed = -maxRotationSpeed;
@@ -44,7 +49,7 @@ void SpaceShip::inputLeft()
 }
 void SpaceShip::inputRight()
 {
-    double newRotationsSpeed = gameObject.getRotationSpeed() + (rotationAcceleration * deltaTime);
+    double newRotationsSpeed = gameObject.getRotationSpeed() + (rotationAcceleration * global::deltaTime);
 
     if (newRotationsSpeed > maxRotationSpeed)
         newRotationsSpeed = maxRotationSpeed;
@@ -55,7 +60,7 @@ void SpaceShip::inputForward()
     double sinMultiplier = sin(gameObject.rotationRadians); // Eixo X
     double cosMultiplier = -cos(gameObject.rotationRadians); // Eixo y
 
-    sf::Vector2f tempSpeedVector((acceleration * sinMultiplier * deltaTime), (acceleration * cosMultiplier * deltaTime));
+    sf::Vector2f tempSpeedVector((acceleration * sinMultiplier * global::deltaTime), (acceleration * cosMultiplier * global::deltaTime));
     sf::Vector2f newSpeed = (gameObject.getSpeed() + tempSpeedVector);
 
 
@@ -80,23 +85,12 @@ void SpaceShip::inputForward()
 
 void SpaceShip::inputFire()
 {
-
+    Bullet tempBullet(gameObject.position, gameObject.getSpeed(), gameObject.rotation);
+    
+    bulletsArr.push_back(tempBullet);
 }
 
-void SpaceShip::setDeltaTime(double newDeltaTime)
-{
-    deltaTime = newDeltaTime;
-    gameObject.setDeltaTime(newDeltaTime);
-}
 
-void SpaceShip::setScreenSizeX(int newSize)
-{
-    screenSizeX = newSize;
-    gameObject.setScreenSizeX(newSize);
-}
 
-void SpaceShip::setScreenSizeY(int newSize)
-{
-    screenSizeY = newSize;
-    gameObject.setScreenSizeY(newSize);
-}
+
+

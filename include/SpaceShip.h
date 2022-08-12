@@ -1,8 +1,11 @@
 #pragma once
 #include "GameObject.h"
+#include "Bullet.h"
+#include "GlobalVariables.h"
 
 
 #include <iostream>
+#include <vector>
 
 class SpaceShip
 {
@@ -20,7 +23,7 @@ public:
     void inputForward();
     void inputFire();
 
-    void process(double _deltaTime);
+    void process();
 
 
     //Getters & Setters
@@ -35,13 +38,13 @@ public:
     void setMaxRotationSpeed(float newMaxRotationSpeed) { maxRotationSpeed = newMaxRotationSpeed; }
     void setRotationAcceleration(float newRotationAcceleration) { rotationAcceleration = newRotationAcceleration; }
     void setAcceleration(float newAcceleration) { acceleration = newAcceleration; }
-    void setDeltaTime(double newDeltaTime);
-    void setScreenSizeX(int newSize);
-    void setScreenSizeY(int newSize);
+
+
+
+    std::vector <Bullet> bulletsArr;
 
 
 private:
-    double deltaTime;
 
 
     //Settings
@@ -50,8 +53,6 @@ private:
     float maxRotationSpeed = 300;
     float rotationAcceleration = 400;
 
-    int screenSizeX;
-    int screenSizeY;
 
 };
 

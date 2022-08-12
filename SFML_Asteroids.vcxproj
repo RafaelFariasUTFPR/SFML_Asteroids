@@ -146,6 +146,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\AsteroidMaster.cpp" />
+    <ClCompile Include="src\Bullet.cpp" />
+    <ClCompile Include="src\GlobalVariables.cpp" />
     <ClCompile Include="src\RandomGenerator.cpp" />
     <ClCompile Include="src\SpaceShip.cpp" />
     <ClCompile Include="src\GameObject.cpp" />
@@ -155,8 +157,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\AsteroidMaster.h" />
+    <ClInclude Include="include\Bullet.h" />
     <ClInclude Include="include\GameObject.h" />
     <ClInclude Include="include\Game.h" />
+    <ClInclude Include="include\GlobalVariables.h" />
     <ClInclude Include="include\RandomGenerator.h" />
     <ClInclude Include="include\SpaceShip.h" />
     <ClInclude Include="include\vertexOperations.h" />

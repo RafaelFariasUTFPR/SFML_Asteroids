@@ -5,6 +5,7 @@
 
 #include "vertexOperations.h"
 #include "RandomGenerator.h"
+#include "GlobalVariables.h"
 
 class GameObject
 {
@@ -32,9 +33,6 @@ public:
 	void setRotation(double newRotation);
 	void setSpeed(sf::Vector2f newSpeed) { speed = newSpeed; }
 	void setRotationSpeed(double newRotationSpeed) { rotationSpeed = newRotationSpeed; }
-	void setDeltaTime(double newDeltaTime) { deltaTime = newDeltaTime; }
-	void setScreenSizeX(int newSize) { screenSizeX = newSize; }
-	void setScreenSizeY(int newSize) { screenSizeY = newSize; }
 	void setWrapOffset(float xOffset, float yOffset) { wrapOffsetX = xOffset; wrapOffsetY = yOffset;};
 
 	bool screenWrap = false;
@@ -47,10 +45,7 @@ private:
 	sf::Vector2f speed;
 	double rotationSpeed;
 
-	double deltaTime;
 
-	int screenSizeX;
-	int screenSizeY;
 
 	float wrapOffsetX = 0;
 	float wrapOffsetY = 0;

@@ -2,11 +2,9 @@
 
 
 // Quando o objeto Game for instanciado também criará um objeto window
-Game::Game() : window(sf::VideoMode(800, 800), "Asteroids")
+Game::Game() : window(sf::VideoMode(global::screenHeight, global::screenWidth), "Asteroids")
 {
-    
 
-    deltaTime = 0;
     fps = 0;
     //Setando o fps
     arialFont.loadFromFile("resources/arial.ttf");
@@ -23,8 +21,6 @@ void Game::beginPlay()
     
     //Player setup
     player1.gameObject.setPosition(sf::Vector2f(400, 400));
-    player1.setScreenSizeX(screenSizeX);
-    player1.setScreenSizeY(screenSizeY);
 
 
     for (int i = 0; i < 10; i++)
@@ -37,7 +33,7 @@ void Game::beginPlay()
 void Game::spawnAsteroid()
 {
 
-    int ySpawnPos = random::randomIntInRange(0, screenSizeY);
+    int ySpawnPos = random::randomIntInRange(0, global::screenHeight);
 
     //0 == esquerda      || 1 == direita
     int spawnSide = random::randomIntInRange(0, 1);
@@ -45,8 +41,6 @@ void Game::spawnAsteroid()
 
 
     AsteroidMaster tempAst(ySpawnPos, spawnSide);
-    tempAst.setScreenSizeX(screenSizeX);
-    tempAst.setScreenSizeY(screenSizeY);
 
     asteroidArr.push_back(tempAst);
 
@@ -79,19 +73,16 @@ void Game::preProcess()
     fps = 1 / deltaTimeClock.getElapsedTime().asSeconds();
     int intFps = (int)fps;
     fpsText.setString("FPS: " + std::to_string(intFps));
-    deltaTime = calculateDeltaTime();
-
-
+    global::deltaTime = calculateDeltaTime();
 
 }
 
 void Game::process()
-{
-    player1.process(deltaTime);
-    
+{  
 
+    player1.process();
     for (int i = 0; i < asteroidArr.size(); i++)
-        asteroidArr[i].process(deltaTime);
+        asteroidArr[i].process();
 
 
     
@@ -115,6 +106,8 @@ void Game::draw()
     for(int i = 0; i < asteroidArr.size(); i++)
         window.draw(asteroidArr[i].gameObject.vertexArr);
 
+    for (int i = 0; i < player1.bulletsArr.size(); i++)
+        window.draw(player1.bulletsArr[i].gameObject.vertexArr);
 
     window.draw(fpsText);
 

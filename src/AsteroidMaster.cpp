@@ -32,9 +32,8 @@ AsteroidMaster::AsteroidMaster(int xSpawnPos, int ySpawnPos, float size)
 }
 
 
-void AsteroidMaster::process(double _deltaTime)
+void AsteroidMaster::process()
 {
-    gameObject.setDeltaTime(_deltaTime);
     gameObject.process();
 }
 

@@ -10,9 +10,9 @@ GameObject::GameObject()
 
 void GameObject::process()
 {
-	setRotation(rotation + (getRotationSpeed() * deltaTime));
+	setRotation(rotation + (getRotationSpeed() * global::deltaTime));
 
-	setPosition(position + sf::Vector2f((getSpeed().x * deltaTime), (getSpeed().y * deltaTime)));
+	setPosition(position + sf::Vector2f((getSpeed().x * global::deltaTime), (getSpeed().y * global::deltaTime)));
 	
 	
 	if (screenWrap)
@@ -21,15 +21,15 @@ void GameObject::process()
 
 void GameObject::processWraping()
 {
-	if (position.x - wrapOffsetX > screenSizeX)
+	if (position.x - wrapOffsetX > global::screenWidth)
 		setPosition(sf::Vector2f(- wrapOffsetX, position.y));
 	if (position.x + wrapOffsetX < 0)
-		setPosition(sf::Vector2f(screenSizeX + wrapOffsetX, position.y));
+		setPosition(sf::Vector2f(global::screenWidth + wrapOffsetX, position.y));
 
-	if (position.y - wrapOffsetY > screenSizeY)
+	if (position.y - wrapOffsetY > global::screenHeight)
 		setPosition(sf::Vector2f(position.x, -wrapOffsetY));
 	if (position.y + wrapOffsetY < 0)
-		setPosition(sf::Vector2f(position.x, screenSizeY + wrapOffsetY));
+		setPosition(sf::Vector2f(position.x, global::screenHeight + wrapOffsetY));
 
 }
 

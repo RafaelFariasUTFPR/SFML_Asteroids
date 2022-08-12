@@ -10,6 +10,7 @@
 #include "SpaceShip.h"
 #include "AsteroidMaster.h"
 #include "RandomGenerator.h"
+#include "GlobalVariables.h"
 
 
 class Game
@@ -43,15 +44,12 @@ private:
 	sf::Clock globalClock;
 	sf::Clock deltaTimeClock;
 
-
 	double deltaTime;
 	float fps;
 	SpaceShip player1;
 	sf::Font arialFont;
 	sf::Text fpsText;
 	
-	int screenSizeX = 800;
-	int screenSizeY = 800;
 
 	
 	std::vector <AsteroidMaster> asteroidArr;
