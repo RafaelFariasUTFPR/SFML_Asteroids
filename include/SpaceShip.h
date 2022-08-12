@@ -1,16 +1,19 @@
 #pragma once
-#include "GameObject.h"
-#include "Bullet.h"
-#include "GlobalVariables.h"
-
 
 #include <iostream>
 #include <vector>
 
+
+#include "GameObject.h"
+#include "Bullet.h"
+#include "GlobalVariables.h"
+#include "AsteroidMaster.h"
+
+
 class SpaceShip
 {
 public:
-    SpaceShip();
+    SpaceShip(std::vector<AsteroidMaster>& _asteroidArrPtr);
 
 
     sf::VertexArray objectVertexArr;
@@ -45,13 +48,16 @@ public:
 
 
 private:
-
+    sf::Clock localClock;
+    std::vector<AsteroidMaster>* asteroidArrPtr;
 
     //Settings
     float maxSpeed = 400;
     float acceleration = 180;
     float maxRotationSpeed = 300;
     float rotationAcceleration = 400;
+
+    float fireBulletDelay = 300; //in milliseconds
 
 
 };

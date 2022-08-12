@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <math.h>
+#include <vector>
 
 #include "vertexOperations.h"
 #include "RandomGenerator.h"
@@ -38,6 +39,9 @@ public:
 	bool screenWrap = false;
 
 
+	bool isOverlapping(sf::VertexArray targetVertexArr);
+	std::vector <sf::VertexArray> collisionDebugLinesArr;
+	sf::VertexArray collisionDebugLines;
 
 private:
 	void processWraping();
@@ -46,7 +50,8 @@ private:
 	double rotationSpeed;
 
 
-
+	bool drawCollisionDebugLines = true;
+	float collisionDetectionDist = 200;
 	float wrapOffsetX = 0;
 	float wrapOffsetY = 0;
 

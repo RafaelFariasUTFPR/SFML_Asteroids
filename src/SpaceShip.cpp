@@ -1,7 +1,7 @@
 #include "../include/SpaceShip.h"
 
 
-SpaceShip::SpaceShip()
+SpaceShip::SpaceShip(std::vector<AsteroidMaster>& _asteroidArrPtr)
 {
     //Definindo o tipo de linha
     objectVertexArr.setPrimitiveType(sf::LinesStrip);
@@ -13,25 +13,31 @@ SpaceShip::SpaceShip()
     objectVertexArr.append(sf::Vertex(sf::Vector2f(-5, 5), sf::Color::White));
 
 
-
     //Setando os vertices do gameObject
     gameObject.vertexArr = objectVertexArr;
     
     gameObject.screenWrap = true;
     gameObject.setWrapOffset(5, 5);
     
+    asteroidArrPtr = &_asteroidArrPtr;
 
 }
 
 void SpaceShip::process()
 {
+    //asteroidArrPtr->at(0).gameObject.vertexArr[0].color = sf::Color::Red;
+
     gameObject.process();
 
 
     for (int i = 0; i < bulletsArr.size(); i++)
     {
-        //std::cout << i << "\n";
         bulletsArr.at(i).process();
+        if (bulletsArr.at(i).expired)
+        {
+            bulletsArr.erase(bulletsArr.begin() + i);
+        }
+
     }
 
 }
@@ -85,9 +91,15 @@ void SpaceShip::inputForward()
 
 void SpaceShip::inputFire()
 {
-    Bullet tempBullet(gameObject.position, gameObject.getSpeed(), gameObject.rotation);
-    
-    bulletsArr.push_back(tempBullet);
+    sf::Time time = localClock.getElapsedTime();
+    if (time.asMilliseconds() > fireBulletDelay)
+    {
+        localClock.restart().asMilliseconds();
+        Bullet tempBullet(gameObject.position, gameObject.getSpeed(), gameObject.rotation, *asteroidArrPtr);
+        
+        bulletsArr.push_back(tempBullet);
+    }
+
 }
 
 

@@ -1,16 +1,27 @@
 #include "../include/Bullet.h"
 
 
-Bullet::Bullet(sf::Vector2f startingPosition, sf::Vector2f startingVelocity, float startingRotation)
+Bullet::Bullet(
+	sf::Vector2f startingPosition, 
+	sf::Vector2f startingVelocity, 
+	float startingRotation, 
+	std::vector<AsteroidMaster>& _asteroidArrPtr)
 {
+	asteroidArrPtr = &_asteroidArrPtr;
 	generateGeometry();
 	gameObject.setPosition(startingPosition);
 	setBulletSpeed(startingVelocity, startingRotation);
 	gameObject.screenWrap = true;
 }
 
-Bullet::Bullet(sf::Vector2f startingPosition, sf::Vector2f startingVelocity, float startingRotation, float _bulletSpeed)
+Bullet::Bullet(
+	sf::Vector2f startingPosition, 
+	sf::Vector2f startingVelocity, 
+	float startingRotation, 
+	float _bulletSpeed, 
+	std::vector<AsteroidMaster>& _asteroidArrPtr)
 {
+	asteroidArrPtr = &_asteroidArrPtr;
 	bulletSpeed = _bulletSpeed;
 	gameObject.setPosition(startingPosition);
 
@@ -18,6 +29,7 @@ Bullet::Bullet(sf::Vector2f startingPosition, sf::Vector2f startingVelocity, flo
 	gameObject.screenWrap = false;
 	generateGeometry();
 }
+
 
 void Bullet::generateGeometry()
 {
@@ -45,5 +57,19 @@ void Bullet::setBulletSpeed(sf::Vector2f startingVelocity, float startingRotatio
 
 void Bullet::process()
 {
+	gameObject.collisionDebugLinesArr.clear();
+	for (int i = 0; i < asteroidArrPtr->size(); i++)
+	{
+		if (gameObject.isOverlapping(asteroidArrPtr->at(i).gameObject.vertexArr))
+		{
+			//TODO
+		}
+	}
+
 	gameObject.process();
+	sf::Time time = localClock.getElapsedTime();
+	if (time.asMilliseconds() > lifeSpan)
+	{
+		expired = true;
+	}
 }

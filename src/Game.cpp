@@ -2,7 +2,7 @@
 
 
 // Quando o objeto Game for instanciado também criará um objeto window
-Game::Game() : window(sf::VideoMode(global::screenHeight, global::screenWidth), "Asteroids")
+Game::Game() : window(sf::VideoMode(global::screenHeight, global::screenWidth), "Asteroids"), player1(asteroidArr)
 {
 
     fps = 0;
@@ -106,8 +106,21 @@ void Game::draw()
     for(int i = 0; i < asteroidArr.size(); i++)
         window.draw(asteroidArr[i].gameObject.vertexArr);
 
+    //Drawing Bullets
     for (int i = 0; i < player1.bulletsArr.size(); i++)
+    {
         window.draw(player1.bulletsArr[i].gameObject.vertexArr);
+
+        // Desenhando linhas de colisão caso haja
+        if (player1.bulletsArr[i].gameObject.collisionDebugLinesArr.size())
+        {
+            for (int j = 0; j < player1.bulletsArr[i].gameObject.collisionDebugLinesArr.size(); j++)
+            {
+                window.draw(player1.bulletsArr[i].gameObject.collisionDebugLinesArr.at(j));
+
+            }
+        }
+    }
 
     window.draw(fpsText);
 

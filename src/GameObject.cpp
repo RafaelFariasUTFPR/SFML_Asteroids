@@ -6,6 +6,11 @@ GameObject::GameObject()
 	rotation = 0;
 	speed = sf::Vector2f(0, 0);
 	rotationSpeed = 0;
+
+
+	collisionDebugLines.setPrimitiveType(sf::Lines);
+
+
 }
 
 void GameObject::process()
@@ -65,4 +70,34 @@ void GameObject::setRotation(double newRotation)
 	}
 	rotation = newRotation;
 	rotationRadians = deg2rad(rotation);
+}
+
+bool GameObject::isOverlapping(sf::VertexArray targetVertexArr)
+{
+	collisionDebugLines.clear();
+	for (int i = 0; i < vertexArr.getVertexCount(); i++)
+	{
+		for (int j = 0; j < targetVertexArr.getVertexCount(); j++)
+		{
+			sf::Vector2f initialPoint(vertexArr[i].position);
+			sf::Vector2f endPoint(targetVertexArr[j].position);
+
+			//Apenas realizará os calculos caso o alvo esteja dentro da collisionDetectionDist
+			if (sqrt(pow((initialPoint.x - endPoint.x), 2) + pow((initialPoint.y - endPoint.y), 2)) > collisionDetectionDist)
+				break;
+
+			if (drawCollisionDebugLines)
+			{
+				collisionDebugLines.append(sf::Vertex(initialPoint, sf::Color::Red));
+				collisionDebugLines.append(sf::Vertex(endPoint, sf::Color::Red));
+
+
+			}
+		}
+
+	}
+	if(drawCollisionDebugLines)
+		collisionDebugLinesArr.push_back(collisionDebugLines);
+
+	return true;
 }
