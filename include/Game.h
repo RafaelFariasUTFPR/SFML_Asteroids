@@ -25,8 +25,11 @@ public:
 
 	sf::RenderWindow window;
 
+	bool running = true;
 
+	bool restart = false;
 	
+
 
 private:
 	//Game loop functions
@@ -39,7 +42,8 @@ private:
 	
 	float calculateDeltaTime();
 
-	void spawnAsteroid();
+	void spawnAsteroid(int asteroidSize);
+	void splitAsteroid(sf::Vector2f position, sf::Vector2f velocity, int parentSize, int floatDirection);
 
 	sf::Clock globalClock;
 	sf::Clock deltaTimeClock;

@@ -8,12 +8,13 @@
 int main()
 {
 	Game game1;
-    game1.beginPlay();
+    
 	
-	while (game1.window.isOpen())
+
+	game1.beginPlay();
+	while (game1.running)
 	{
 		game1.loop();
-
 	}
 
 

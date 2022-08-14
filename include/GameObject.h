@@ -53,7 +53,7 @@ private:
 	double rotationSpeed;
 
 
-	bool drawCollisionDebugLines = true;
+	bool drawCollisionDebugLines = false;
 	float collisionDetectionDist = 200;
 	float wrapOffsetX = 0;
 	float wrapOffsetY = 0;

@@ -43,9 +43,8 @@ public:
     void setAcceleration(float newAcceleration) { acceleration = newAcceleration; }
 
 
-
     std::vector <Bullet> bulletsArr;
-
+    bool dead = false;
 
 private:
     sf::Clock localClock;

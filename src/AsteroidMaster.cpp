@@ -2,16 +2,12 @@
 
 AsteroidMaster::AsteroidMaster()
 {
-    radius = 30;
     setup();
 }
 
 
 AsteroidMaster::AsteroidMaster(int ySpawnPos, int spawnSide)
-{
-    radius = 50;
-    
-    int xSpawnPos = 0 - radius;
+{   
     
     if (spawnSide)
         floatDirection = -1;
@@ -20,15 +16,35 @@ AsteroidMaster::AsteroidMaster(int ySpawnPos, int spawnSide)
 
     setup();
 
+    int xSpawnPos = 0 - radius;
+
     gameObject.setPosition(sf::Vector2f(xSpawnPos, ySpawnPos));
     
 }
 
 
-AsteroidMaster::AsteroidMaster(int xSpawnPos, int ySpawnPos, float size)
+AsteroidMaster::AsteroidMaster(int ySpawnPos, int spawnSide, int _size)
 {
-    radius = size;
+    size = _size;
+    
+    if (spawnSide)
+        floatDirection = -1;
+    if (spawnSide == 0)
+        floatDirection = 1;
+
     setup();
+    int xSpawnPos = 0 - radius;
+
+    gameObject.setPosition(sf::Vector2f(xSpawnPos, ySpawnPos));
+
+}
+
+AsteroidMaster::AsteroidMaster(sf::Vector2f spawnPos, int _size, int _floatDirection)
+{
+    floatDirection = _floatDirection;
+    size = _size;
+    setup();
+    gameObject.setPosition(spawnPos);
 }
 
 
@@ -41,9 +57,10 @@ void AsteroidMaster::destroyed()
 {
     expired = true;
 
-    //Debuggin
+    /*/Debuggin
     for (int i = 0; i < gameObject.vertexArr.getVertexCount(); i++)
         gameObject.vertexArr[i].color = sf::Color::Red;
+    */
 }
 
 
@@ -132,6 +149,26 @@ void AsteroidMaster::generateGeometry()
 
 void AsteroidMaster::setup()
 {
+    switch (size)
+    {
+    case 1:
+        radius = 9;
+        break;
+    case 2:
+        radius = 20;
+        break;
+    case 3:
+        radius = 40;
+        break;
+    case 4:
+        radius = 60;
+        break;
+
+    default:
+        radius = 40;
+        break;
+    }
+
     generateGeometry();
     gameObject.screenWrap = true;
     gameObject.setWrapOffset(1.2 * radius, 1.2 * radius);

@@ -25,14 +25,13 @@ void Game::beginPlay()
 
     for (int i = 0; i < 10; i++)
     {
-        spawnAsteroid();
+        spawnAsteroid(4);
     }
 
 }
 
-void Game::spawnAsteroid()
+void Game::spawnAsteroid(int asteroidSize)
 {
-
     int ySpawnPos = random::randomIntInRange(0, global::screenHeight);
 
     //0 == esquerda      || 1 == direita
@@ -40,10 +39,33 @@ void Game::spawnAsteroid()
 
 
 
-    AsteroidMaster tempAst(ySpawnPos, spawnSide);
+    AsteroidMaster tempAst(ySpawnPos, spawnSide, asteroidSize);
 
     asteroidArr.push_back(tempAst);
 
+}
+
+void Game::splitAsteroid(sf::Vector2f position, sf::Vector2f velocity, int parentSize, int floatDirection)
+{
+    for (int i = 0; i < 2; i++)
+    {
+        sf::Vector2f speedDif(random::randomIntInRange(-5, 5), random::randomIntInRange(-10, 10));
+
+
+        AsteroidMaster tempAst(position, parentSize - 1, floatDirection);
+        tempAst.gameObject.setSpeed(tempAst.gameObject.getSpeed() + speedDif);
+
+        float ySpawnOffset = tempAst.radius;
+        if (i)
+            ySpawnOffset *= -1;
+        tempAst.gameObject.setPosition(tempAst.gameObject.position + sf::Vector2f(random::randomIntInRange((int) -tempAst.radius, (int)tempAst.radius), ySpawnOffset));
+        //Separando um pouco no spawn
+        
+
+        asteroidArr.push_back(tempAst);
+
+
+    }
 }
 
 void Game::loop()
@@ -81,11 +103,29 @@ void Game::process()
 {  
 
     player1.process();
+    if (player1.dead)
+    {
+        restart = true;
+        endPlay();
+        return;
+    }
+
     for (int i = 0; i < asteroidArr.size(); i++)
     {
+        AsteroidMaster *asteroidPtr = &asteroidArr[i];
+        AsteroidMaster asteroid = asteroidArr[i];
         asteroidArr[i].process();
-        if(asteroidArr[i].expired)
+        if (asteroid.expired)
+        {
+            //Deletando o asteroid da array
             asteroidArr.erase(asteroidArr.begin() + i);
+
+            //Caso ele seja grande eu divido ele
+            if (asteroid.size > 1)
+                splitAsteroid(asteroid.gameObject.position, asteroid.gameObject.getSpeed(), asteroid.size, asteroid.floatDirection);
+             
+
+        }
     }
 
 
@@ -107,6 +147,10 @@ void Game::draw()
 
     window.draw(player1.gameObject.vertexArr);
 
+    for (int i = 0; i < player1.gameObject.collisionDebugLinesArr.size(); i++)
+        window.draw(player1.gameObject.collisionDebugLinesArr.at(i));
+
+
     for(int i = 0; i < asteroidArr.size(); i++)
         window.draw(asteroidArr[i].gameObject.vertexArr);
 
@@ -125,6 +169,7 @@ void Game::draw()
             }
         }
     }
+    
 
     window.draw(fpsText);
 
@@ -159,5 +204,5 @@ void Game::input()
 //Codigo executado ao fim do jogo
 void Game::endPlay()
 {
-
+    running = false;
 }

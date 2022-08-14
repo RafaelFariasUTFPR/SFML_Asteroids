@@ -40,6 +40,17 @@ void SpaceShip::process()
 
     }
 
+    gameObject.collisionDebugLinesArr.clear();
+    for (int i = 0; i < asteroidArrPtr->size(); i++)
+    {
+        if (gameObject.isOverlapping(asteroidArrPtr->at(i).gameObject.vertexArr, asteroidArrPtr->at(i).gameObject.position))
+        {
+            //asteroidArrPtr->at(i).destroyed();
+            dead = true;
+            return;
+        }
+    }
+
 }
 
 

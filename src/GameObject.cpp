@@ -77,6 +77,7 @@ bool GameObject::isOverlapping(sf::VertexArray targetVertexArr, sf::Vector2f tar
 	collisionDebugLines.clear();
 
 	int targetArrVertexCount = targetVertexArr.getVertexCount();
+	bool isInside = false;
 	for (int i = 0; i < vertexArr.getVertexCount(); i++)
 	{
 		sf::Vector2f initialPoint(vertexArr[i].position);
@@ -84,7 +85,7 @@ bool GameObject::isOverlapping(sf::VertexArray targetVertexArr, sf::Vector2f tar
 
 		//Apenas realizará os calculos caso o alvo esteja dentro da collisionDetectionDist
 		if (sqrt(pow((initialPoint.x - endPoint.x), 2) + pow((initialPoint.y - endPoint.y), 2)) > collisionDetectionDist)
-			return false;
+			continue;
 
 		if (drawCollisionDebugLines)
 		{
@@ -92,11 +93,15 @@ bool GameObject::isOverlapping(sf::VertexArray targetVertexArr, sf::Vector2f tar
 			collisionDebugLines.append(sf::Vertex(endPoint, sf::Color::Red));
 		}
 
+		bool intersectedLines = false;
 		for (int j = 1; j < targetArrVertexCount; j++)
 		{
+			
 			sf::Vector2f initialLinePoint(targetVertexArr[j-1].position);
 			sf::Vector2f endLinePoint(targetVertexArr[j].position);
 			
+			
+
 			if (doLinesIntersect(initialPoint, endPoint, initialLinePoint, endLinePoint))
 			{
 				if (drawCollisionDebugLines)
@@ -106,12 +111,16 @@ bool GameObject::isOverlapping(sf::VertexArray targetVertexArr, sf::Vector2f tar
 
 					collisionDebugLinesArr.push_back(collisionDebugLines);
 				}
-				return false;
+				intersectedLines = true;
+				
 			}
-			
+
 		}
+
+		if (!intersectedLines)
+			return true;
 
 	}
 	
-	return true;
+	return false;
 }

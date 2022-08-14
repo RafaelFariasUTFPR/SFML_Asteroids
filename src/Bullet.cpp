@@ -64,7 +64,6 @@ void Bullet::process()
 		{
 			asteroidArrPtr->at(i).destroyed();
 			expired = true;
-			//TODO
 		}
 	}
 
