@@ -82,7 +82,11 @@ void Game::process()
 
     player1.process();
     for (int i = 0; i < asteroidArr.size(); i++)
+    {
         asteroidArr[i].process();
+        if(asteroidArr[i].expired)
+            asteroidArr.erase(asteroidArr.begin() + i);
+    }
 
 
     

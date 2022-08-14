@@ -37,6 +37,15 @@ void AsteroidMaster::process()
     gameObject.process();
 }
 
+void AsteroidMaster::destroyed()
+{
+    expired = true;
+
+    //Debuggin
+    for (int i = 0; i < gameObject.vertexArr.getVertexCount(); i++)
+        gameObject.vertexArr[i].color = sf::Color::Red;
+}
+
 
 void AsteroidMaster::generateGeometry()
 {

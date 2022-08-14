@@ -72,4 +72,7 @@
   <ItemGroup>
     <Font Include="C:\Users\rafae\Downloads\arial.ttf" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="README.md" />
+  </ItemGroup>
 </Project>

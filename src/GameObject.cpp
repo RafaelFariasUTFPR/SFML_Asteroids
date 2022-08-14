@@ -72,36 +72,46 @@ void GameObject::setRotation(double newRotation)
 	rotationRadians = deg2rad(rotation);
 }
 
-bool GameObject::isOverlapping(sf::VertexArray targetVertexArr)
+bool GameObject::isOverlapping(sf::VertexArray targetVertexArr, sf::Vector2f targetPosition)
 {
 	collisionDebugLines.clear();
+
+	int targetArrVertexCount = targetVertexArr.getVertexCount();
 	for (int i = 0; i < vertexArr.getVertexCount(); i++)
 	{
-		for (int j = 0; j < targetVertexArr.getVertexCount(); j++)
+		sf::Vector2f initialPoint(vertexArr[i].position);
+		sf::Vector2f endPoint(targetPosition);
+
+		//Apenas realizará os calculos caso o alvo esteja dentro da collisionDetectionDist
+		if (sqrt(pow((initialPoint.x - endPoint.x), 2) + pow((initialPoint.y - endPoint.y), 2)) > collisionDetectionDist)
+			return false;
+
+		if (drawCollisionDebugLines)
 		{
-			sf::Vector2f initialPoint(vertexArr[i].position);
-			sf::Vector2f endPoint(targetVertexArr[j].position);
+			collisionDebugLines.append(sf::Vertex(initialPoint, sf::Color::Red));
+			collisionDebugLines.append(sf::Vertex(endPoint, sf::Color::Red));
+		}
 
-			//Apenas realizará os calculos caso o alvo esteja dentro da collisionDetectionDist
-			if (sqrt(pow((initialPoint.x - endPoint.x), 2) + pow((initialPoint.y - endPoint.y), 2)) > collisionDetectionDist)
-				break;
-
-			//TODO
-			//COLLISION CODE GOES HERE
-
-
-			if (drawCollisionDebugLines)
+		for (int j = 1; j < targetArrVertexCount; j++)
+		{
+			sf::Vector2f initialLinePoint(targetVertexArr[j-1].position);
+			sf::Vector2f endLinePoint(targetVertexArr[j].position);
+			
+			if (doLinesIntersect(initialPoint, endPoint, initialLinePoint, endLinePoint))
 			{
-				collisionDebugLines.append(sf::Vertex(initialPoint, sf::Color::Red));
-				collisionDebugLines.append(sf::Vertex(endPoint, sf::Color::Red));
+				if (drawCollisionDebugLines)
+				{
+					collisionDebugLines.append(sf::Vertex(initialLinePoint, sf::Color::Blue));
+					collisionDebugLines.append(sf::Vertex(endLinePoint, sf::Color::Blue));
 
-
+					collisionDebugLinesArr.push_back(collisionDebugLines);
+				}
+				return false;
 			}
+			
 		}
 
 	}
-	if(drawCollisionDebugLines)
-		collisionDebugLinesArr.push_back(collisionDebugLines);
-
+	
 	return true;
 }
