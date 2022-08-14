@@ -1,1 +1,1 @@
-*Asteroids feito em c++ com SFML
+# Asteroids feito em c++ com SFML
