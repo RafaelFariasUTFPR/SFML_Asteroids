@@ -86,6 +86,10 @@ bool GameObject::isOverlapping(sf::VertexArray targetVertexArr)
 			if (sqrt(pow((initialPoint.x - endPoint.x), 2) + pow((initialPoint.y - endPoint.y), 2)) > collisionDetectionDist)
 				break;
 
+			//TODO
+			//COLLISION CODE GOES HERE
+
+
 			if (drawCollisionDebugLines)
 			{
 				collisionDebugLines.append(sf::Vertex(initialPoint, sf::Color::Red));
