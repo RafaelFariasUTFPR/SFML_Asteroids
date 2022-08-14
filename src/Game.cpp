@@ -2,9 +2,9 @@
 
 
 // Quando o objeto Game for instanciado também criará um objeto window
-Game::Game() : window(sf::VideoMode(global::screenHeight, global::screenWidth), "Asteroids"), player1(asteroidArr)
+Game::Game(sf::RenderWindow& _window) : player1(asteroidArr)
 {
-
+    window = &_window;
     fps = 0;
     //Setando o fps
     arialFont.loadFromFile("resources/arial.ttf");
@@ -17,8 +17,8 @@ Game::Game() : window(sf::VideoMode(global::screenHeight, global::screenWidth), 
 
 void Game::beginPlay()
 {
-    window.setFramerateLimit(500);
-    
+    window->setFramerateLimit(0);
+    //window.setVerticalSyncEnabled(true);
     //Player setup
     player1.gameObject.setPosition(sf::Vector2f(400, 400));
 
@@ -79,12 +79,12 @@ void Game::loop()
 void Game::preProcess()
 {
     sf::Event event;
-    while (window.pollEvent(event))
+    while (window->pollEvent(event))
     {
         switch (event.type)
         {
         case sf::Event::Closed:
-            window.close();
+            window->close();
             endPlay();
             break;
 
@@ -143,37 +143,39 @@ float Game::calculateDeltaTime()
 
 void Game::draw()
 {
-    window.clear();
 
-    window.draw(player1.gameObject.vertexArr);
+
+    window->clear();
+
+    window->draw(player1.gameObject.vertexArr);
 
     for (int i = 0; i < player1.gameObject.collisionDebugLinesArr.size(); i++)
-        window.draw(player1.gameObject.collisionDebugLinesArr.at(i));
+        window->draw(player1.gameObject.collisionDebugLinesArr.at(i));
 
 
     for(int i = 0; i < asteroidArr.size(); i++)
-        window.draw(asteroidArr[i].gameObject.vertexArr);
+        window->draw(asteroidArr[i].gameObject.vertexArr);
 
     //Drawing Bullets
     for (int i = 0; i < player1.bulletsArr.size(); i++)
     {
-        window.draw(player1.bulletsArr[i].gameObject.vertexArr);
+        window->draw(player1.bulletsArr[i].gameObject.vertexArr);
 
         // Desenhando linhas de colisão caso haja
         if (player1.bulletsArr[i].gameObject.collisionDebugLinesArr.size())
         {
             for (int j = 0; j < player1.bulletsArr[i].gameObject.collisionDebugLinesArr.size(); j++)
             {
-                window.draw(player1.bulletsArr[i].gameObject.collisionDebugLinesArr.at(j));
+                window->draw(player1.bulletsArr[i].gameObject.collisionDebugLinesArr.at(j));
 
             }
         }
     }
     
 
-    window.draw(fpsText);
+    window->draw(fpsText);
 
-    window.display();
+    window->display();
 }
 
 void Game::input()
@@ -190,11 +192,13 @@ void Game::input()
 
     //Debug keys
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::F1))
-        window.setFramerateLimit(30);
+        window->setFramerateLimit(30);
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::F2))
-        window.setFramerateLimit(400);
+        window->setFramerateLimit(400);
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::F3))
-        window.setFramerateLimit(900);
+        window->setFramerateLimit(900);
+
+
 
 }
 

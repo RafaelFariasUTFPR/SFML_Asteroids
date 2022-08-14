@@ -16,14 +16,14 @@
 class Game
 {
 public:
-	Game();
+	Game(sf::RenderWindow &_window);
 
 
 	void beginPlay();
 	void loop();
 
 
-	sf::RenderWindow window;
+	sf::RenderWindow *window;
 
 	bool running = true;
 
